@@ -30,7 +30,7 @@ public class PlayerBehavior : MonoBehaviour
     public bool canMineHighGem = false; // player must trade twice to mine these gems
     public static int collectedGems = 0;
     public int totalValueOfGems = 0; // quota collected
-    private int tradeCount = 0; // track number of trades completed
+    //private int tradeCount = 0; // track number of trades completed
 
     private void Start()
     {
@@ -123,8 +123,10 @@ public class PlayerBehavior : MonoBehaviour
             totalValueOfGems += gemPickup.gemValue;
             Destroy(gem);
             collectedGems += 1;
-
             //Debug.Log($"Player mined a {gemType}. Total collected: {collectedGems}, Total Value: {totalValueOfGems}");
+
+            //play mining gem SFX
+            SoundController.instance.PlayMiningSound();
 
             // update UI
             GameUI.instance.UpdateGemsValueText(totalValueOfGems);

@@ -154,7 +154,7 @@ MonoBehaviour:
   moveSpeed: 10
   jumpForce: 50
   distanceToGround: 0.01
-  maxHealth: 100
+  maxHealth: 150
   currentHealth: 0
   npcHitDamage: 50
   groundLayer:

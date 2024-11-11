@@ -74,6 +74,8 @@ public class PickupItem : MonoBehaviour
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.F)) // Check for 'F' key
         {
+            //SoundController.instance.PlayMiningSound(); // play mining SFX
+
             //Debug.Log("Attempting to collect item...");
 
             if (player != null)
