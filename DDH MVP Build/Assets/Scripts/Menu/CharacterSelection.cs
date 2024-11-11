@@ -35,7 +35,7 @@ public class CharacterSelection : MonoBehaviour
     {
         messageText.text = $"You have chosen {selectedCharacter}!";
         confirmationPanel.SetActive(false);
-        Debug.Log($"{selectedCharacter} selected.");
+        //Debug.Log($"{selectedCharacter} selected");
 
         // save the selected character choice and load the game scene
         PlayerPrefs.SetString("SelectedCharacter", selectedCharacter);

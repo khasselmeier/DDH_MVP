@@ -22,7 +22,7 @@ public class GemProximityUI : MonoBehaviour
 
             if (playerBehavior == null)
             {
-                Debug.Log("Searching for PlayerBehavior...");
+                //Debug.Log("Searching for PlayerBehavior...");
                 return;
             }
         }

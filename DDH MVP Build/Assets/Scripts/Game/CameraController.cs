@@ -44,7 +44,7 @@ public class CameraController : MonoBehaviour
         sensX = newSensX; // Directly set the X sensitivity
         sensY = newSensY.HasValue ? newSensY.Value : sensX; // Use provided Y or default to X
 
-        Debug.Log($"Sensitivity updated to X: {sensX}, Y: {sensY}");
+        //Debug.Log($"Sensitivity updated to X: {sensX}, Y: {sensY}");
     }
 
     public void ToggleCameraMovement(bool isActive)

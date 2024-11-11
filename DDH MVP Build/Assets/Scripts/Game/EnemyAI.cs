@@ -113,7 +113,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Player not found by EnemyAI");
+            //Debug.LogError("Player not found by EnemyAI");
         }
     }
 
@@ -121,14 +121,14 @@ public class EnemyAI : MonoBehaviour
     {
         isChasing = true;
         navMeshAgent.isStopped = false;
-        Debug.Log("Enemy has started chasing the player");
+        //Debug.Log("Enemy has started chasing the player");
     }
 
     private void StopChasing()
     {
         isChasing = false;
         navMeshAgent.isStopped = true;
-        Debug.Log("Enemy has stopped chasing the player");
+        //Debug.Log("Enemy has stopped chasing the player");
     }
 
     public void TakeDamage(int damage)
@@ -167,7 +167,7 @@ public class EnemyAI : MonoBehaviour
             if (playerBehavior != null)
             {
                 playerBehavior.TakeDamage(damageAmount);
-                Debug.Log($"Player took {damageAmount} damage from the enemy!");
+                Debug.Log($"Player took {damageAmount} damage from the enemy");
             }
 
             attackTimer = 0f; // resets timer
@@ -176,7 +176,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy has died.");
+        Debug.Log("Enemy has died");
         Destroy(gameObject);
     }
 }

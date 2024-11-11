@@ -38,28 +38,24 @@ public class CharacterSpawner : MonoBehaviour
             selectedPrefab = characterTwoPrefab;
             Debug.Log("Thalgrim prefab selected");
         }
-        else
-        {
-            Debug.LogError("Unknown character selected");
-        }
 
         // Spawn the character at the spawn point
         if (selectedPrefab != null && spawnPoint != null)
         {
             GameObject playerInstance = Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
             playerInstance.tag = "Player"; // makes sure the player is tagged as "Player"
-            Debug.Log($"Spawned {selectedCharacter} and tagged as: {playerInstance.tag}");
+            //Debug.Log($"Spawned {selectedCharacter} and tagged as: {playerInstance.tag}");
         }
         else
         {
             if (selectedPrefab == null)
             {
-                Debug.LogError("Selected prefab is null!");
+                Debug.LogError("Selected prefab is null");
             }
 
             if (spawnPoint == null)
             {
-                Debug.LogError("Spawn point is missing!");
+                Debug.LogError("Spawn point is missing");
             }
         }
     }
@@ -70,17 +66,17 @@ public class CharacterSpawner : MonoBehaviour
         {
             moldrockUIImage.gameObject.SetActive(true);
             thalgrimUIImage.gameObject.SetActive(false);
-            Debug.Log("Moldrock UI image displayed");
+            //Debug.Log("Moldrock UI image displayed");
         }
         else if (selectedCharacter == "Thalgrim")
         {
             thalgrimUIImage.gameObject.SetActive(true);
             moldrockUIImage.gameObject.SetActive(false);
-            Debug.Log("Thalgrim UI image displayed");
+            //Debug.Log("Thalgrim UI image displayed");
         }
         else
         {
-            Debug.LogError("Unknown character selected, no UI image to display.");
+            //Debug.LogError("Unknown character selected, no UI image to display.");
         }
     }
 }

@@ -39,7 +39,7 @@ public class PlayerBehavior : MonoBehaviour
         if (pickaxe != null)
         {
             pickaxe.SetActive(false); // disable pickaxe at the start
-            Debug.Log("Pickaxe is set to inactive");
+            //Debug.Log("Pickaxe is set to inactive");
         }
 
         PlayerInitialized?.Invoke(this); // notify that player is initialized
@@ -124,7 +124,7 @@ public class PlayerBehavior : MonoBehaviour
             Destroy(gem);
             collectedGems += 1;
 
-            Debug.Log($"Player mined a {gemType}. Total collected: {collectedGems}, Total Value: {totalValueOfGems}");
+            //Debug.Log($"Player mined a {gemType}. Total collected: {collectedGems}, Total Value: {totalValueOfGems}");
 
             // update UI
             GameUI.instance.UpdateGemsValueText(totalValueOfGems);
@@ -156,7 +156,7 @@ public class PlayerBehavior : MonoBehaviour
         if (pickaxe != null)
         {
             pickaxe.SetActive(true);
-            Debug.Log("Pickaxe enabled");
+            //Debug.Log("Pickaxe enabled");
         }
     }
 
@@ -211,7 +211,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public void OnNpcHit()
     {
-        Debug.Log("The NPC doesn't enjoy being hit");
+        //Debug.Log("The NPC doesn't enjoy being hit");
         TakeDamage(npcHitDamage); // player takes damage when hitting the NPC
     }
 }

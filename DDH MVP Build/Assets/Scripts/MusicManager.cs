@@ -11,7 +11,7 @@ public class MusicManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // Keep this instance across scenes
-            Debug.Log("MusicManager instance created");
+            //Debug.Log("MusicManager instance created");
         }
         else
         {
@@ -25,7 +25,7 @@ public class MusicManager : MonoBehaviour
         if (!audioSource.isPlaying)
         {
             audioSource.Play();
-            Debug.Log("Playing music");
+            //Debug.Log("Playing music");
         }
     }
 }

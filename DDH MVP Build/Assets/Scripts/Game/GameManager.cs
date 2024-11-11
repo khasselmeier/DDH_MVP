@@ -30,19 +30,19 @@ public class GameManager : MonoBehaviour
         if (player != null && player.totalValueOfGems > GemPickup.totalGems)
         {
             WinGame();
-            Debug.Log("Win condition met! Player's Total Value: " + player.totalValueOfGems + " exceeds " + GemPickup.totalGems);
+            //Debug.Log("Win condition met! Player's Total Value: " + player.totalValueOfGems + " exceeds " + GemPickup.totalGems);
         }
     }
 
     public void WinGame()
     {
-        Debug.Log("You collected the quota! You win!");
+        //Debug.Log("You collected the quota! You win!");
         SceneManager.LoadScene("End"); // switch to "end" scene
     }
 
     public void LoseGame()
     {
-        Debug.Log("Game Over. You Lose");
+        //Debug.Log("Game Over. You Lose");
         SceneManager.LoadScene("Lose"); // switch to "Lose" scene
     }
 }

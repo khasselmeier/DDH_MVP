@@ -38,10 +38,6 @@ public class GemPickup : MonoBehaviour
         {
             GameUI.instance.UpdateTotalGemsText();
         }
-        /*else
-        {
-            Debug.LogError("GameUI instance is not initialized.");
-        }*/
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,48 +59,4 @@ public class GemPickup : MonoBehaviour
             player = null;
         }
     }
-
-    /*
-    private void Update()
-    {
-        if (isPlayerInRange && Input.GetMouseButtonDown(0)) // check for left mouse button down (button index 0)
-        {
-            if (player != null)
-            {
-                //Debug.Log("Player has traded: " + player.hasTraded);
-                if (player.hasTraded)
-                {
-                    CollectGem();
-                }
-                else
-                {
-                    Debug.Log("You must trade with the NPC before collecting gems");
-                }
-            }
-            else
-            {
-                Debug.Log("Player reference is null");
-            }
-        }
-    }
-
-    private void CollectGem()
-    {
-        PlayerBehavior playerBehavior = player.GetComponent<PlayerBehavior>();
-        playerBehavior.totalValueOfGems += gemValue;
-
-        Debug.Log("Gem Collected! Value: " + gemValue + ", Player's Total Value: " + playerBehavior.totalValueOfGems);
-
-        // Update UI
-        if (GameUI.instance != null)
-        {
-            GameUI.instance.UpdateGemsValueText(playerBehavior.totalValueOfGems);
-        }
-        else
-        {
-            Debug.LogError("GameUI instance is not initialized.");
-        }
-
-        Destroy(gameObject);
-    }*/
 }

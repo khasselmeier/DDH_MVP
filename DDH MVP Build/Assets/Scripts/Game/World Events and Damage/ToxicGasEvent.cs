@@ -26,14 +26,9 @@ public class ToxicGasEvent : MonoBehaviour
         // start looking for the player in a coroutine if it's not assigned immediately
         StartCoroutine(FindPlayerCoroutine());
 
-        if (gasScreenOverlay == null)
-        {
-            Debug.LogError("Gas screen overlay not assigned.");
-        }
-
         if (gasNotificationText == null)
         {
-            Debug.LogError("Gas notification text not assigned.");
+            //Debug.LogError("Gas notification text not assigned");
         }
         else
         {
@@ -63,11 +58,11 @@ public class ToxicGasEvent : MonoBehaviour
             player = FindObjectOfType<PlayerBehavior>();
             if (player == null)
             {
-                Debug.Log("Waiting for PlayerBehavior to be assigned...");
+                //Debug.Log("Waiting for PlayerBehavior to be assigned...");
                 yield return new WaitForSeconds(0.5f); // try again every 0.5 seconds
             }
         }
-        Debug.Log("PlayerBehavior found and assigned.");
+        //Debug.Log("PlayerBehavior found and assigned");
     }
 
     void TryStartGas()
@@ -101,7 +96,7 @@ public class ToxicGasEvent : MonoBehaviour
             if (player != null)
             {
                 player.TakeDamage(damagePerTick); // deal damage to the player
-                Debug.Log($"Player took {damagePerTick} damage from toxic gas");
+                //Debug.Log($"Player took {damagePerTick} damage from toxic gas");
             }
 
             // wait for the damage interval before dealing damage again

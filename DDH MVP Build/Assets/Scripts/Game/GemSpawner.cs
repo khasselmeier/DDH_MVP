@@ -23,7 +23,7 @@ public class GemSpawner : MonoBehaviour
     {
         if (spawnLocations.Count == 0)
         {
-            Debug.LogWarning("No spawn locations assigned.");
+            //Debug.LogWarning("No spawn locations assigned");
             return;
         }
 
@@ -42,7 +42,7 @@ public class GemSpawner : MonoBehaviour
         {
             if (availableLocations.Count == 0)
             {
-                Debug.LogWarning("Not enough spawn locations for all gems.");
+                //Debug.LogWarning("Not enough spawn locations for all gems");
                 return;
             }
 

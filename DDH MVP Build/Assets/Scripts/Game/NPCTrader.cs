@@ -40,12 +40,12 @@ public class NPCTrader : MonoBehaviour
             if (!hasTradedBaseGem)
             {
                 tradePromptText.gameObject.SetActive(true);
-                tradePromptText.text = "Trade 50 gold for a pickaxe to mine gems";
+                tradePromptText.text = "Trade 100 gold for a pickaxe to mine gems";
             }
             else if (hasTradedBaseGem && !hasTradedHighGem)
             {
                 tradePromptText.gameObject.SetActive(true);
-                tradePromptText.text = "Having trouble mining some gems? I can fix that for 100 gold";
+                tradePromptText.text = "Having trouble mining some gems? I can fix that for 200 gold";
             }
         }
     }
@@ -88,7 +88,7 @@ public class NPCTrader : MonoBehaviour
             player.PerformTrade();  // call PerformTrade() to activate pickaxe after first trade
             tradePromptText.gameObject.SetActive(false);
 
-            Debug.Log("Player traded for ability to mine base gems");
+            //Debug.Log("Player traded for ability to mine base gems");
 
             // update the NPC UI text
             tradePromptText.gameObject.SetActive(true);
@@ -104,11 +104,11 @@ public class NPCTrader : MonoBehaviour
             //player.PerformTrade();
             tradePromptText.gameObject.SetActive(false);
 
-            Debug.Log("Player traded for ability to mine high gems");
+            //Debug.Log("Player traded for ability to mine high gems");
         }
         else
         {
-            Debug.Log("Not enough gold for the upgrade");
+            //Debug.Log("Not enough gold for the upgrade");
         }
 
         GameUI.instance.UpdateGoldText(player.gold); // update gold UI

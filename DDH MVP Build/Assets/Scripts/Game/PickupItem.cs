@@ -33,10 +33,6 @@ public class PickupItem : MonoBehaviour
         {
             pickupPanel.SetActive(false); // hide the UI panel initially
         }
-        else
-        {
-            Debug.LogError("Pickup panel is not assigned in the inspector");
-        }
 
         //Debug.Log($"{itemType} pickup created with amount: {amount}");
     }
@@ -107,7 +103,7 @@ public class PickupItem : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player reference is null");
+                //Debug.Log("Player reference is null");
             }
         }
     }

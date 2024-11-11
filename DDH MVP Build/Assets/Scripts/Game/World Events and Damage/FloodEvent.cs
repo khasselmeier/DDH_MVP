@@ -26,14 +26,9 @@ public class FloodEvent : MonoBehaviour
         // Start looking for the player in a coroutine if it's not assigned immediately
         StartCoroutine(FindPlayerCoroutine());
 
-        if (floodScreenOverlay == null)
-        {
-            Debug.LogError("Flood screen overlay not assigned.");
-        }
-
         if (floodNotificationText == null)
         {
-            Debug.LogError("Flood notification text not assigned.");
+            //Debug.LogError("Flood notification text not assigned.");
         }
         else
         {
@@ -63,11 +58,11 @@ public class FloodEvent : MonoBehaviour
             player = FindObjectOfType<PlayerBehavior>();
             if (player == null)
             {
-                Debug.Log("Waiting for PlayerBehavior to be assigned...");
+                //Debug.Log("Waiting for PlayerBehavior to be assigned...");
                 yield return new WaitForSeconds(0.5f); // try again every 0.5 seconds
             }
         }
-        Debug.Log("PlayerBehavior found and assigned.");
+        //Debug.Log("PlayerBehavior found and assigned.");
     }
 
     void TryStartFlood()
@@ -101,7 +96,7 @@ public class FloodEvent : MonoBehaviour
             if (player != null)
             {
                 player.TakeDamage(damagePerTick); //deal dmg to the player
-                Debug.Log($"Player took {damagePerTick} damage from flooding.");
+                //Debug.Log($"Player took {damagePerTick} damage from flooding.");
             }
 
             // wait for the dmg interval before dealing dmg again
