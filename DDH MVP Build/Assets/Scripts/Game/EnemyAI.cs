@@ -26,7 +26,10 @@ public class EnemyAI : MonoBehaviour
     private float attackTimer;
 
     private Renderer enemyRenderer;
-    private Color originalColor; //store the original enemy color
+    private Color originalColor;
+
+    private Animation animationComponent; // animation component
+    public AnimationClip pickaxeAttackClip; // animation llip for attack
 
     void Start()
     {
@@ -37,7 +40,14 @@ public class EnemyAI : MonoBehaviour
         attackTimer = 0f;
 
         enemyRenderer = GetComponent<Renderer>();
-        originalColor = enemyRenderer.material.color; //store the original enemy color
+        originalColor = enemyRenderer.material.color; // store the original enemy color
+
+        animationComponent = GetComponentInChildren<Animation>();
+
+        if (animationComponent != null && pickaxeAttackClip != null)
+        {
+            animationComponent.AddClip(pickaxeAttackClip, "PickaxeAttack");
+        }
     }
 
     void Update()
@@ -91,8 +101,8 @@ public class EnemyAI : MonoBehaviour
             if (waitTimer >= waitTimeAtPatrolPoint)
             {
                 // move to the next patrol point
-                currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length; // Loop back to the start
-                navMeshAgent.SetDestination(patrolPoints[currentPatrolIndex].position); // Set the new destination
+                currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+                navMeshAgent.SetDestination(patrolPoints[currentPatrolIndex].position);
                 waitTimer = 0; // reset the wait timer
             }
         }
@@ -110,10 +120,6 @@ public class EnemyAI : MonoBehaviour
         {
             player = playerObject.transform;
             //Debug.Log("Player found by EnemyAI");
-        }
-        else
-        {
-            //Debug.LogError("Player not found by EnemyAI");
         }
     }
 
@@ -136,10 +142,9 @@ public class EnemyAI : MonoBehaviour
         currentHealth -= damage;
         Debug.Log($"Enemy took {damage} damage. Current health: {currentHealth}");
 
-        //flash red
+        // flash red
         StartCoroutine(FlashRed());
 
-        // calls the die method if health hits zero
         if (currentHealth <= 0)
         {
             Die();
@@ -148,13 +153,13 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator FlashRed()
     {
-        //change the enemy's color to red
+        // change the enemy's color to red
         enemyRenderer.material.color = Color.red;
 
-        //wait for half a second
+        // wait for half a second
         yield return new WaitForSeconds(0.5f);
 
-        //change back to the original color
+        // change back to the original color
         enemyRenderer.material.color = originalColor;
     }
 
@@ -162,6 +167,11 @@ public class EnemyAI : MonoBehaviour
     {
         if (attackTimer >= attackCooldown)
         {
+            if (animationComponent != null && pickaxeAttackClip != null)
+            {
+                animationComponent.Play("PickaxeAttack"); // play attack animation
+            }
+
             PlayerBehavior playerBehavior = player.GetComponent<PlayerBehavior>();
 
             if (playerBehavior != null)

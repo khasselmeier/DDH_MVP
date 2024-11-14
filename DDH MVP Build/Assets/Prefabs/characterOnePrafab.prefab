@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 3228770625775708478}
   - component: {fileID: 3228770625774620062}
   - component: {fileID: 5458324762302445147}
+  - component: {fileID: 3208478133694005425}
   m_Layer: 0
   m_Name: pickaxe_1
   m_TagString: pickaxe
@@ -59,12 +60,12 @@ Transform:
   m_GameObject: {fileID: 3228770625776636650}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13724937, y: 0.6936589, z: 0.13724932, w: 0.6936588}
-  m_LocalPosition: {x: 0.193, y: -0.46, z: 0.549}
+  m_LocalPosition: {x: 0.193, y: -0.484, z: 0.747}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8014589619182563505}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 22.384}
+  m_LocalEulerAnglesHint: {x: 0.706, y: -95.661, z: -30.72926}
 --- !u!33 &3228770625775708478
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -136,6 +137,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: -0.000007619321, y: 0.16899751, z: -0.000013502518}
+--- !u!111 &3208478133694005425
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3228770625776636650}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 3b5d846d7bb8c0047a737c6232b2b223, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3b5d846d7bb8c0047a737c6232b2b223, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &4320993212029251303
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 40
+  jumpForce: 50
   distanceToGround: 0.01
   maxHealth: 200
   currentHealth: 0
@@ -305,6 +322,8 @@ MonoBehaviour:
   canMineBaseGem: 0
   canMineHighGem: 0
   totalValueOfGems: 0
+  pickaxeAnimation: {fileID: 3208478133694005425}
+  pickaxeAttackClip: {fileID: 7400000, guid: 3b5d846d7bb8c0047a737c6232b2b223, type: 2}
 --- !u!114 &2507222480201273430
 MonoBehaviour:
   m_ObjectHideFlags: 0

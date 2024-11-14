@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d476be3261280264c8fad4a465827cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  jumpForce: 50
+  moveSpeed: 8
+  jumpForce: 60
   distanceToGround: 0.01
   maxHealth: 150
   currentHealth: 0
@@ -169,6 +169,8 @@ MonoBehaviour:
   canMineBaseGem: 0
   canMineHighGem: 0
   totalValueOfGems: 0
+  pickaxeAnimation: {fileID: 3336280063660197052}
+  pickaxeAttackClip: {fileID: 7400000, guid: 3b5d846d7bb8c0047a737c6232b2b223, type: 2}
 --- !u!114 &3471947376212225948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +233,7 @@ GameObject:
   - component: {fileID: 7094462775454435972}
   - component: {fileID: 7094462775453363748}
   - component: {fileID: 4423540659445276808}
+  - component: {fileID: 3336280063660197052}
   m_Layer: 0
   m_Name: pickaxe
   m_TagString: pickaxe
@@ -247,12 +250,12 @@ Transform:
   m_GameObject: {fileID: 7094462775451447632}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14596365, y: 0.69187766, z: 0.14596361, w: 0.69187766}
-  m_LocalPosition: {x: 0.193, y: -0.1, z: 0.764}
+  m_LocalPosition: {x: 0.193, y: -0.102, z: 0.736}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5901814815296371308}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 23.826}
+  m_LocalEulerAnglesHint: {x: 0.706, y: -95.661, z: -25.301992}
 --- !u!33 &7094462775454435972
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -322,8 +325,24 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.01, z: 0.01}
-  m_Center: {x: -0.000000005037528, y: 0.16900516, z: -0.000013515878}
+  m_Size: {x: 0.5520377, y: 0.7259024, z: 0.13566306}
+  m_Center: {x: -0.024881192, y: 0.18643394, z: 0.00169497}
+--- !u!111 &3336280063660197052
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7094462775451447632}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 3b5d846d7bb8c0047a737c6232b2b223, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3b5d846d7bb8c0047a737c6232b2b223, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8191709953513473760
 GameObject:
   m_ObjectHideFlags: 0
