@@ -1,14 +1,5 @@
 # DDH_MVP
 
-***What's New 11/5-11/11:***
-1. Added a new area for players to explore
-2. Players now must trade 100 and 200 gold to mine gems (was 50 and 100 previously)
-3. Gave players 50 more health
-4. Added new spawn locations for blue gems
-5. Moved the rock spawn location so that it is easier to aim
-6. Added SFX for mining gems
-7. Added SFX for lava that will get progressively louder as players get closer
-
 ***What's New 11/12-11/18:***
 1. The lava will now slowly rise up and down
 2. Changed the lava material
@@ -18,6 +9,9 @@
 6. Gave the NPC an idle animation
 7. Gave the enemies walking and idle animations
 8. Added a swinging animation for the pickaxe -> when the enemy attacks and when the player left-clicks
+
+***Known Bug(s):***
+1. Enemies do not flash red after taking damage
 
 **Please Play in Full Screen:** https://khasselmeier.github.io/DDH_MVP/
 
