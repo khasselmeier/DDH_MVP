@@ -16,7 +16,21 @@ public class ImageDisplayManager : MonoBehaviour
         foreach (Image img in images)
         {
             img.gameObject.SetActive(true);
-            yield return new WaitForSeconds(3f); //wait for *blank* seconds
+
+            float timeElapsed = 0f;
+
+            // wait for *blank* seconds or until the spacebar is pressed
+            while (timeElapsed < 3f)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    break;
+                }
+
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+
             img.gameObject.SetActive(false);
         }
     }

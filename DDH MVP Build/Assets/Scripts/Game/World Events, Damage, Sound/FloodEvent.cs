@@ -76,10 +76,10 @@ public class FloodEvent : MonoBehaviour
 
     void StartFlood()
     {
-        Debug.Log("Flood has started!");
+        Debug.Log("Flood has started");
         isFlooding = true;
         floodNotificationText.gameObject.SetActive(true); //show the flood notification text
-        floodNotificationText.text = "A flood has started";
+        floodNotificationText.text = "Water seems to be rapidly increasing";
 
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(FadeScreen(true)); //fade the screen to blue
@@ -119,7 +119,7 @@ public class FloodEvent : MonoBehaviour
     IEnumerator FadeScreen(bool fadeIn)
     {
         Color overlayColor = floodScreenOverlay.color;
-        float targetAlpha = fadeIn ? 0.5f : 0f; // 50% blue when the flood is active, 0% when it's over
+        float targetAlpha = fadeIn ? 0.3f : 0f; // 50% blue when the flood is active, 0% when it's over
 
         while (!Mathf.Approximately(overlayColor.a, targetAlpha))
         {

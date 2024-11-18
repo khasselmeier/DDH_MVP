@@ -2625,7 +2625,7 @@ MonoBehaviour:
 
     -> fast
 
-    -> carry up to 20 rocks
+    -> carry up to 40 rocks
 
     ->
     less health'
@@ -2901,7 +2901,7 @@ MonoBehaviour:
 
     -> slow
 
-    -> carry up to 50 rocks
+    -> carry up to 60 rocks
 
     ->
     more health'

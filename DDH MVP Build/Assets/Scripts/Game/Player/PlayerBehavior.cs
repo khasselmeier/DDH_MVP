@@ -138,7 +138,7 @@ public class PlayerBehavior : MonoBehaviour
         if (gemPickup != null)
         {
             totalValueOfGems += gemPickup.gemValue;
-            Destroy(gem);
+            //Destroy(gem);
             collectedGems += 1;
             //Debug.Log($"Player mined a {gemType}. Total collected: {collectedGems}, Total Value: {totalValueOfGems}");
 
@@ -147,7 +147,16 @@ public class PlayerBehavior : MonoBehaviour
 
             // update UI
             GameUI.instance.UpdateGemsValueText(totalValueOfGems);
+
+            //destroy the gems with a delay (to give the sfx and anim time to play)
+            StartCoroutine(DestroyGemWithDelay(gem, .5f));
         }
+    }
+
+    private IEnumerator DestroyGemWithDelay(GameObject gem, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gem); //destroy gem after the delay
     }
 
     public bool IsNearGem()

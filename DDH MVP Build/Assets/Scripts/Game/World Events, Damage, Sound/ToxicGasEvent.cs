@@ -79,7 +79,7 @@ public class ToxicGasEvent : MonoBehaviour
         Debug.Log("Toxic gas event has started");
         isGassing = true;
         gasNotificationText.gameObject.SetActive(true); // show the gas notification text
-        gasNotificationText.text = "Toxic gas seems to be leaking";
+        gasNotificationText.text = "Gas seems to be leaking";
 
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(FadeScreen(true)); // fade the screen to green
