@@ -9,6 +9,9 @@
 6. Gave the NPC an idle animation
 7. Gave the enemies walking and idle animations
 8. Added a swinging animation for the pickaxe -> when the enemy attacks and when the player left-clicks
+9. Players can skip the intro text
+10. Players can now climb out of the lava if they fall in
+11. There is a slight delay in picking up gems (so that the pickaxe anim and sfx have time to play)
 
 ***Known Bug(s):***
 1. Enemies do not flash red after taking damage
