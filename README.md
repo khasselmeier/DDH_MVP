@@ -8,9 +8,7 @@
 6. Added an entrance for tall players only and an entrance for short players only
 7. Added a direct pathway from the starting point to the lava room
 8. Added a "Potion NPC" that can restore the players health
-
-***Known Bug(s):***
-1. Enemies do not flash red after taking damage
+9. Fixed the enemies not flashing ted when taking damage
 
 **Please Play in Full Screen:** https://khasselmeier.github.io/DDH_MVP/
 
