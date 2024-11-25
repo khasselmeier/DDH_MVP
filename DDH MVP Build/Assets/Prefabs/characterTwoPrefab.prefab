@@ -356,7 +356,6 @@ GameObject:
   - component: {fileID: 6575209857899499462}
   - component: {fileID: 3512773108716907585}
   - component: {fileID: 5490965584924717924}
-  - component: {fileID: 4851673196489484084}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: MainCamera
@@ -455,18 +454,6 @@ MonoBehaviour:
   sensY: 2
   minY: -50
   maxY: 50
---- !u!114 &4851673196489484084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8191709953513473760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8fceb0b4e7676e4ba1b0ae15588fd8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5109257366783456684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -518,6 +505,10 @@ PrefabInstance:
     - target: {fileID: 6144862483296063421, guid: 1b701450243ed5e4f9899d53564f7378, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6334453293183346662, guid: 1b701450243ed5e4f9899d53564f7378, type: 3}
+      propertyPath: orthographic size
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
