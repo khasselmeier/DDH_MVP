@@ -7,6 +7,7 @@ public class SoundController : MonoBehaviour
     [Header("Audio Sources")]
     public AudioSource miningGemSFX;
     public AudioSource lavaSFX;
+    public AudioSource damageSFX;
 
     [Header("Lava Settings")]
     public Transform lava;
@@ -15,6 +16,9 @@ public class SoundController : MonoBehaviour
 
     [Header("Mining Settings")]
     public float miningSFXDuration = 2f; //sound will play for -- seconds
+
+    [Header("Player Settings")]
+    public float damageSFXDuration = 0.5f; //sound will play for -- seconds
 
     public static SoundController instance;
 
@@ -72,22 +76,26 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    /*private void CheckLavaDistance()
+    public void PlayDamageSound()
     {
-        if (lavaSFX != null && player != null && lava != null)
+        if (damageSFX != null)
         {
-            float distance = Vector3.Distance(player.position, lava.position);
-
-            if (distance <= lavaPlayDistance && !lavaSFX.isPlaying)
-            {
-                lavaSFX.Play();
-            }
-            else if (distance > lavaPlayDistance && lavaSFX.isPlaying)
-            {
-                lavaSFX.Stop();
-            }
+            damageSFX.Play();
+            Invoke(nameof(StopDamageSound), damageSFXDuration);
         }
-    }*/
+        else
+        {
+            Debug.LogWarning("DamageSFX is not assigned");
+        }
+    }
+
+    public void StopDamageSound()
+    {
+        if (damageSFX != null && damageSFX.isPlaying)
+        {
+            damageSFX.Stop();
+        }
+    }
 
     private void AdjustLavaSoundVolume()
     {

@@ -215,8 +215,10 @@ public class PlayerBehavior : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        GameUI.instance.UpdateHealthText(currentHealth, maxHealth); // update health UI
-        //Debug.Log($"Player took {damage} damage. Current health: {currentHealth}");
+        GameUI.instance.UpdateHealthText(currentHealth, maxHealth); // Update health UI
+
+        // Play damage sound
+        SoundController.instance.PlayDamageSound();
 
         if (currentHealth <= 0)
         {

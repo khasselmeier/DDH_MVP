@@ -10,31 +10,40 @@ public class PickupItem : MonoBehaviour
     }
 
     public ItemType itemType;
-    public int amount = 1; // amt to add to player's inventory
+    public int amount = 1; // Amount to add to the player's inventory
 
     private bool isPlayerInRange = false;
-    private PlayerBehavior player; // ref to the player
+    private PlayerBehavior player; // Reference to the player
 
     [Header("UI Elements")]
     public GameObject pickupPanel; // UI panel to show interact button when in pickup range
+
+    [Header("Outline Effect")]
+    public Material outlineMaterial; // Material for the outline effect
+    public Material originalMaterial; // Original material of the object
+    private Renderer objectRenderer; // Renderer of the item
 
     private void Start()
     {
         if (itemType == ItemType.Rock)
         {
-            amount = Random.Range(1, 10); // random value for rocks
+            amount = Random.Range(1, 10); // Random value for rocks
         }
         else if (itemType == ItemType.Gold)
         {
-            amount = Random.Range(3, 12); // random value for gold
+            amount = Random.Range(3, 12); // Random value for gold
         }
 
         if (pickupPanel != null)
         {
-            pickupPanel.SetActive(false); // hide the UI panel initially
+            pickupPanel.SetActive(false); // Hide the UI panel initially
         }
 
-        //Debug.Log($"{itemType} pickup created with amount: {amount}");
+        objectRenderer = GetComponent<Renderer>();
+        if (objectRenderer != null)
+        {
+            originalMaterial = objectRenderer.material; // Store the original material
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,9 +52,8 @@ public class PickupItem : MonoBehaviour
         {
             isPlayerInRange = true;
             player = other.GetComponent<PlayerBehavior>();
-            //Debug.Log("Player entered pickup range.");
 
-            // show the panel when the player is in range
+            // Show the panel when the player is in range
             if (pickupPanel != null)
             {
                 pickupPanel.SetActive(true);
@@ -58,7 +66,7 @@ public class PickupItem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            player = null; // clears player reference
+            player = null; // Clears player reference
 
             // Hide the pickup panel when the player leaves the range
             if (pickupPanel != null)
@@ -66,47 +74,77 @@ public class PickupItem : MonoBehaviour
                 pickupPanel.SetActive(false);
             }
 
-            //Debug.Log("Player exited pickup range.");
+            DisableOutline(); // Remove outline when out of range
         }
     }
 
     private void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F)) // Check for 'F' key
+        // Handle item pickup
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
         {
-            //SoundController.instance.PlayMiningSound(); // play mining SFX
-
-            //Debug.Log("Attempting to collect item...");
-
             if (player != null)
             {
                 switch (itemType)
                 {
                     case ItemType.Rock:
-                        player.AddAmmo(amount); // add ammo in PlayerBehavior
+                        player.AddAmmo(amount); // Add ammo in PlayerBehavior
                         break;
                     case ItemType.Gold:
-                        player.AddGold(amount); // add gold in PlayerBehavior
+                        player.AddGold(amount); // Add gold in PlayerBehavior
                         break;
                 }
 
                 // Update the UI
-                GameUI.instance.UpdateAmmoText(); // update ammo UI
-                GameUI.instance.UpdateGoldText(player.gold); // update gold UI
+                GameUI.instance.UpdateAmmoText(); // Update ammo UI
+                GameUI.instance.UpdateGoldText(player.gold); // Update gold UI
 
-                // hide the panel after
                 if (pickupPanel != null)
                 {
                     pickupPanel.SetActive(false);
                 }
 
-                // destroy item after collection
-                Destroy(gameObject);
+                Destroy(gameObject); // Destroy item after collection
+            }
+        }
+
+        // Raycast for crosshair detection
+        CheckForHover();
+    }
+
+    private void CheckForHover()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.collider.gameObject == gameObject)
+            {
+                EnableOutline(); // Enable outline when hovered
             }
             else
             {
-                //Debug.Log("Player reference is null");
+                DisableOutline(); // Disable outline when not hovered
             }
+        }
+        else
+        {
+            DisableOutline(); // Disable outline if no object is hit
+        }
+    }
+
+    private void EnableOutline()
+    {
+        if (objectRenderer != null && outlineMaterial != null)
+        {
+            objectRenderer.material = outlineMaterial;
+        }
+    }
+
+    private void DisableOutline()
+    {
+        if (objectRenderer != null && originalMaterial != null)
+        {
+            objectRenderer.material = originalMaterial;
         }
     }
 }
