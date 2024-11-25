@@ -1,17 +1,13 @@
 # DDH_MVP
-
-***What's New 11/12-11/18:***
-1. The lava will now slowly rise up and down
-2. Changed the lava material
-3. Changed the material of the small enemies
-4. Changed the pathing of the small enemies in the "lava room" so they no longer crowd together
-5. Added new enemy and NPC models (from the asset store)
-6. Gave the NPC an idle animation
-7. Gave the enemies walking and idle animations
-8. Added a swinging animation for the pickaxe -> when the enemy attacks and when the player left-clicks
-9. Players can skip the intro text
-10. Players can now climb out of the lava if they fall in
-11. There is a slight delay in picking up gems (so that the pickaxe anim and sfx have time to play)
+***What's New 11/19-11/25:***
+1. Added UI to constantly show how much gold is needed for the pickaxe upgrades
+2. Added an outline to rocks, gold, and small creates
+3. Added a SFX when players take damage
+4. Added a mini map
+5. Players can now randomly obtain a small amount of rocks (ammo), gold, or health from small crates
+6. Added an entrance for tall players only and an entrance for short players only
+7. Added a direct pathway from the starting point to the lava room
+8. Added a "Potion NPC" that can restore the players health
 
 ***Known Bug(s):***
 1. Enemies do not flash red after taking damage
