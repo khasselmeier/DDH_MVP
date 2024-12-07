@@ -1,14 +1,11 @@
 # DDH_MVP
-***What's New 11/19-11/25:***
-1. Added UI to constantly show how much gold is needed for the pickaxe upgrades
-2. Added an outline to rocks, gold, and small creates
-3. Added a SFX when players take damage
-4. Added a mini map
-5. Players can now randomly obtain a small amount of rocks (ammo), gold, or health from small crates
-6. Added an entrance for tall players only and an entrance for short players only
-7. Added a direct pathway from the starting point to the lava room
-8. Added a "Potion NPC" that can restore the players health
-9. Fixed the enemies not flashing ted when taking damage
+***What's New***
+1. Added a lantern that the player holds
+2. Adjusted the in-game lighting
+3. Added SFXs for gold, rock, and health pickups
+4. Gave the player footstep SFXs
+5. Added triggers for the two world events so they only occur in specific areas
+6. Added UI that will display when the player enters a dangerous area
 
 **Please Play in Full Screen:** https://khasselmeier.github.io/DDH_MVP/
 
