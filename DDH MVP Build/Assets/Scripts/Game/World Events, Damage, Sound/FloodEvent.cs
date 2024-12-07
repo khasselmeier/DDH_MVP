@@ -1,46 +1,47 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class FloodEvent : MonoBehaviour
 {
-    public float floodChance = 0.1f; // 10% chance for a flood to occur per check
+    public float floodChance = 0.1f;
     public float floodDuration = 10f;
-    public float floodDamageInterval = 1f; // how often the player takes damage per second
+    public float floodDamageInterval = 1f;
     public int damagePerTick = 5;
     public Image floodScreenOverlay;
-    public TMP_Text floodNotificationText; //UI text for flood notif
+    public TMP_Text floodNotificationText;
+    public TMP_Text areaWarningText;
 
     private bool isFlooding = false;
+    private bool playerInFloodZone = false;
     private float timeSinceLastCheck = 0f;
     public float checkInterval = 30f;
 
     private PlayerBehavior player;
     public float fadeSpeed = 1f;
     private Coroutine fadeCoroutine;
+    private Coroutine floodCoroutine;
 
     private void Awake()
     {
-        // Start looking for the player in a coroutine if it's not assigned immediately
         StartCoroutine(FindPlayerCoroutine());
 
-        if (floodNotificationText == null)
+        if (floodNotificationText != null)
         {
-            //Debug.LogError("Flood notification text not assigned.");
+            floodNotificationText.gameObject.SetActive(false);
         }
-        else
+
+        if (areaWarningText != null)
         {
-            floodNotificationText.gameObject.SetActive(false); // hide at the start
+            areaWarningText.gameObject.SetActive(false);
         }
     }
 
     private void Update()
     {
-        if (!isFlooding && player != null)
+        if (playerInFloodZone && !isFlooding && player != null)
         {
-            // check periodically if a flood should start
             timeSinceLastCheck += Time.deltaTime;
             if (timeSinceLastCheck >= checkInterval)
             {
@@ -52,22 +53,18 @@ public class FloodEvent : MonoBehaviour
 
     private IEnumerator FindPlayerCoroutine()
     {
-        // wait until the PlayerBehavior is available
         while (player == null)
         {
             player = FindObjectOfType<PlayerBehavior>();
             if (player == null)
             {
-                //Debug.Log("Waiting for PlayerBehavior to be assigned...");
-                yield return new WaitForSeconds(0.5f); // try again every 0.5 seconds
+                yield return new WaitForSeconds(0.5f);
             }
         }
-        //Debug.Log("PlayerBehavior found and assigned.");
     }
 
     void TryStartFlood()
     {
-        //random chance to start a flood
         if (Random.value <= floodChance)
         {
             StartFlood();
@@ -78,13 +75,13 @@ public class FloodEvent : MonoBehaviour
     {
         Debug.Log("Flood has started");
         isFlooding = true;
-        floodNotificationText.gameObject.SetActive(true); //show the flood notification text
+        floodNotificationText.gameObject.SetActive(true);
         floodNotificationText.text = "Water seems to be rapidly increasing";
 
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
-        fadeCoroutine = StartCoroutine(FadeScreen(true)); //fade the screen to blue
+        fadeCoroutine = StartCoroutine(FadeScreen(true));
 
-        StartCoroutine(FloodCoroutine());
+        floodCoroutine = StartCoroutine(FloodCoroutine());
     }
 
     IEnumerator FloodCoroutine()
@@ -95,11 +92,9 @@ public class FloodEvent : MonoBehaviour
         {
             if (player != null)
             {
-                player.TakeDamage(damagePerTick); //deal dmg to the player
-                //Debug.Log($"Player took {damagePerTick} damage from flooding.");
+                player.TakeDamage(damagePerTick);
             }
 
-            // wait for the dmg interval before dealing dmg again
             yield return new WaitForSeconds(floodDamageInterval);
             elapsedTime += floodDamageInterval;
         }
@@ -112,6 +107,7 @@ public class FloodEvent : MonoBehaviour
         Debug.Log("The flood has ended");
         isFlooding = false;
         floodNotificationText.gameObject.SetActive(false);
+
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(FadeScreen(false));
     }
@@ -119,13 +115,46 @@ public class FloodEvent : MonoBehaviour
     IEnumerator FadeScreen(bool fadeIn)
     {
         Color overlayColor = floodScreenOverlay.color;
-        float targetAlpha = fadeIn ? 0.3f : 0f; // 50% blue when the flood is active, 0% when it's over
+        float targetAlpha = fadeIn ? 0.3f : 0f;
 
         while (!Mathf.Approximately(overlayColor.a, targetAlpha))
         {
             overlayColor.a = Mathf.MoveTowards(overlayColor.a, targetAlpha, fadeSpeed * Time.deltaTime);
             floodScreenOverlay.color = overlayColor;
             yield return null;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInFloodZone = true;
+            TryStartFlood();
+
+            if (areaWarningText != null)
+            {
+                areaWarningText.gameObject.SetActive(true);
+                areaWarningText.text = "Warning: Increased flooding in the area";
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInFloodZone = false;
+            if (floodCoroutine != null)
+            {
+                StopCoroutine(floodCoroutine);
+                EndFlood(); // end the flood immediately when player leaves
+            }
+
+            if (areaWarningText != null)
+            {
+                areaWarningText.gameObject.SetActive(false);
+            }
         }
     }
 }

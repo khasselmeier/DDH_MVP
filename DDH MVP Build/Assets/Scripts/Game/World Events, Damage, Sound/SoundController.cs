@@ -8,17 +8,22 @@ public class SoundController : MonoBehaviour
     public AudioSource miningGemSFX;
     public AudioSource lavaSFX;
     public AudioSource damageSFX;
+    public AudioSource goldPickupSFX;
+    public AudioSource rockPickupSFX;
+    public AudioSource healthPickupSFX;
+    public AudioSource footstepsSFX;
 
     [Header("Lava Settings")]
     public Transform lava;
     public float lavaPlayDistance = 10f;
     public float maxLavaVolume = 1.0f;
 
-    [Header("Mining Settings")]
+    [Header("SFX Durations")]
     public float miningSFXDuration = 2f; //sound will play for -- seconds
-
-    [Header("Player Settings")]
-    public float damageSFXDuration = 0.5f; //sound will play for -- seconds
+    public float damageSFXDuration = 0.5f;
+    public float goldSFXDuration = 1f;
+    public float rockSFXDuration = 1f;
+    public float healthSFXDuration = 1f;
 
     public static SoundController instance;
 
@@ -45,7 +50,6 @@ public class SoundController : MonoBehaviour
             if (playerObj != null)
             {
                 player = playerObj.transform;
-                //Debug.Log("Player found by SoundController");
             }
         }
 
@@ -55,45 +59,70 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    public void PlayMiningSound()
+    public void PlayFootstepsSound()
     {
-        if (miningGemSFX != null)
+        if (footstepsSFX != null && !footstepsSFX.isPlaying)
         {
-            miningGemSFX.Play();
-            Invoke(nameof(StopMiningGemSound), miningSFXDuration);
-        }
-        else
-        {
-            Debug.LogWarning("MiningGemSFX is not asssigned");
+            footstepsSFX.loop = true; // Loop footsteps for continuous walking
+            footstepsSFX.Play();
         }
     }
 
-    public void StopMiningGemSound()
+    public void StopFootstepsSound()
     {
-        if (miningGemSFX != null && miningGemSFX.isPlaying)
+        if (footstepsSFX != null && footstepsSFX.isPlaying)
         {
-            miningGemSFX.Stop();
+            footstepsSFX.loop = false;
+            footstepsSFX.Stop();
         }
+    }
+
+    public void PlayGoldPickupSound()
+    {
+        PlaySoundWithDuration(goldPickupSFX, goldSFXDuration);
+    }
+
+    public void PlayRockPickupSound()
+    {
+        PlaySoundWithDuration(rockPickupSFX, rockSFXDuration);
+    }
+
+    public void PlayHealthPickupSound()
+    {
+        PlaySoundWithDuration(healthPickupSFX, healthSFXDuration);
+    }
+
+    public void PlayMiningSound()
+    {
+        PlaySoundWithDuration(miningGemSFX, miningSFXDuration);
     }
 
     public void PlayDamageSound()
     {
-        if (damageSFX != null)
+        PlaySoundWithDuration(damageSFX, damageSFXDuration);
+    }
+
+    private void PlaySoundWithDuration(AudioSource audioSource, float duration)
+    {
+        if (audioSource != null)
         {
-            damageSFX.Play();
-            Invoke(nameof(StopDamageSound), damageSFXDuration);
+            audioSource.Play();
+            Invoke(nameof(StopCurrentSound), duration);
         }
         else
         {
-            Debug.LogWarning("DamageSFX is not assigned");
+            Debug.LogWarning($"{audioSource?.name} SFX is not assigned");
         }
     }
 
-    public void StopDamageSound()
+    private void StopCurrentSound()
     {
-        if (damageSFX != null && damageSFX.isPlaying)
+        foreach (AudioSource source in new[] { goldPickupSFX, rockPickupSFX, healthPickupSFX, miningGemSFX, damageSFX })
         {
-            damageSFX.Stop();
+            if (source != null && source.isPlaying)
+            {
+                source.Stop();
+            }
         }
     }
 

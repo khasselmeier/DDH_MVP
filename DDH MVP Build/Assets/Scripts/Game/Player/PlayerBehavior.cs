@@ -30,20 +30,20 @@ public class PlayerBehavior : MonoBehaviour
     public bool canMineHighGem = false; // player must trade twice to mine these gems
     public static int collectedGems = 0;
     public int totalValueOfGems = 0; // quota collected
-    //private int tradeCount = 0; // track number of trades completed
 
     [Header("Animations")]
     public Animation pickaxeAnimation;
     public AnimationClip pickaxeAttackClip;
 
+    private bool isMoving = false; // tracks whether the player is currently moving (for the footsteps audio)
+
     private void Start()
     {
-        currentHealth = maxHealth; // initialize player health
+        currentHealth = maxHealth;
 
         if (pickaxe != null)
         {
             pickaxe.SetActive(false); // disable pickaxe at the start
-            //Debug.Log("Pickaxe is set to inactive");
         }
 
         if (pickaxeAnimation != null && pickaxeAttackClip != null)
@@ -95,6 +95,20 @@ public class PlayerBehavior : MonoBehaviour
 
         // set that as our velocity
         rig.velocity = dir;
+
+        // Check if the player is moving
+        bool currentlyMoving = x != 0 || z != 0;
+
+        if (currentlyMoving && !isMoving)
+        {
+            isMoving = true;
+            SoundController.instance.PlayFootstepsSound(); // start playing footsteps sound
+        }
+        else if (!currentlyMoving && isMoving)
+        {
+            isMoving = false;
+            SoundController.instance.StopFootstepsSound(); // stop playing footsteps sound
+        }
     }
 
     void TryJump()
@@ -129,7 +143,6 @@ public class PlayerBehavior : MonoBehaviour
                 return;
             }
         }
-        //Debug.Log("No collectible gems in range or requirements not met");
     }
 
     public void CollectGem(GameObject gem, string gemType)
@@ -138,7 +151,6 @@ public class PlayerBehavior : MonoBehaviour
         if (gemPickup != null)
         {
             totalValueOfGems += gemPickup.gemValue;
-            //Destroy(gem);
             collectedGems += 1;
             //Debug.Log($"Player mined a {gemType}. Total collected: {collectedGems}, Total Value: {totalValueOfGems}");
 
@@ -168,7 +180,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             GameObject gem = hitCollider.gameObject;
 
-            // Check if the player can mine base or high gems
+            // check if the player can mine base or high gems
             if (gem.CompareTag("BaseGem") && canMineBaseGem || gem.CompareTag("HighGem") && canMineHighGem)
             {
                 return true;
@@ -215,9 +227,9 @@ public class PlayerBehavior : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        GameUI.instance.UpdateHealthText(currentHealth, maxHealth); // Update health UI
+        GameUI.instance.UpdateHealthText(currentHealth, maxHealth); // update health UI
 
-        // Play damage sound
+        // play damage sound
         SoundController.instance.PlayDamageSound();
 
         if (currentHealth <= 0)

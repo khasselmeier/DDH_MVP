@@ -34,7 +34,7 @@ public class CrateInteraction : MonoBehaviour
 
         if (pickupPanel != null)
         {
-            pickupPanel.SetActive(false); // hide the panel
+            pickupPanel.SetActive(false);
         }
     }
 
@@ -125,37 +125,31 @@ public class CrateInteraction : MonoBehaviour
 
     private void GiveRandomReward(PlayerBehavior player)
     {
-        if (player == null)
-        {
-            return;
-        }
+        if (player == null) return;
 
-        int rewardType = Random.Range(0, 3); // (0 = rocks, 1 = gold, 2 = health)
+        int rewardType = Random.Range(0, 3);
 
         switch (rewardType)
         {
             case 0:
                 int rocks = Random.Range(minRocks, maxRocks + 1);
                 player.AddAmmo(rocks);
-                GameUI.instance.UpdateAmmoText(); // update ammo UI
-                //Debug.Log($"Player received {rocks} rocks");
+                GameUI.instance.UpdateAmmoText();
+                SoundController.instance.PlayRockPickupSound();
                 break;
 
             case 1:
                 int gold = Random.Range(minGold, maxGold + 1);
                 player.AddGold(gold);
-                GameUI.instance.UpdateGoldText(player.gold); // update gold UI
-                //Debug.Log($"Player received {gold} gold");
+                GameUI.instance.UpdateGoldText(player.gold);
+                SoundController.instance.PlayGoldPickupSound();
                 break;
 
             case 2:
                 int health = Random.Range(minHealth, maxHealth + 1);
                 player.Heal(health);
-                GameUI.instance.UpdateHealthText(player.currentHealth, player.maxHealth); // update health UI
-                //Debug.Log($"Player received {health} health");
-                break;
-
-            default:
+                GameUI.instance.UpdateHealthText(player.currentHealth, player.maxHealth);
+                SoundController.instance.PlayHealthPickupSound();
                 break;
         }
     }

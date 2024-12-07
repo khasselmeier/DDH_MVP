@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,33 +11,37 @@ public class ToxicGasEvent : MonoBehaviour
     public int damagePerTick = 5;
     public Image gasScreenOverlay;
     public TMP_Text gasNotificationText; // UI text for gas notification
+    public TMP_Text areaWarningText; // UI text for the area warning
 
     private bool isGassing = false;
+    private bool playerInGasZone = false;
     private float timeSinceLastCheck = 0f;
     public float checkInterval = 30f;
 
     private PlayerBehavior player;
     public float fadeSpeed = 1f;
     private Coroutine fadeCoroutine;
+    private Coroutine gasCoroutine;
 
     private void Awake()
     {
-        // start looking for the player in a coroutine if it's not assigned immediately
+        // look for the player
         StartCoroutine(FindPlayerCoroutine());
 
-        if (gasNotificationText == null)
+        if (gasNotificationText != null)
         {
-            //Debug.LogError("Gas notification text not assigned");
+            gasNotificationText.gameObject.SetActive(false); // hide the text initially
         }
-        else
+
+        if (areaWarningText != null)
         {
-            gasNotificationText.gameObject.SetActive(false); // hide at the start
+            areaWarningText.gameObject.SetActive(false); // Hide area warning initially
         }
     }
 
     private void Update()
     {
-        if (!isGassing && player != null)
+        if (playerInGasZone && !isGassing && player != null)
         {
             // check periodically if toxic gas should start
             timeSinceLastCheck += Time.deltaTime;
@@ -52,17 +55,14 @@ public class ToxicGasEvent : MonoBehaviour
 
     private IEnumerator FindPlayerCoroutine()
     {
-        // wait until the PlayerBehavior is available
         while (player == null)
         {
             player = FindObjectOfType<PlayerBehavior>();
             if (player == null)
             {
-                //Debug.Log("Waiting for PlayerBehavior to be assigned...");
-                yield return new WaitForSeconds(0.5f); // try again every 0.5 seconds
+                yield return new WaitForSeconds(0.5f);
             }
         }
-        //Debug.Log("PlayerBehavior found and assigned");
     }
 
     void TryStartGas()
@@ -84,7 +84,7 @@ public class ToxicGasEvent : MonoBehaviour
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(FadeScreen(true)); // fade the screen to green
 
-        StartCoroutine(GasCoroutine());
+        gasCoroutine = StartCoroutine(GasCoroutine());
     }
 
     IEnumerator GasCoroutine()
@@ -96,7 +96,6 @@ public class ToxicGasEvent : MonoBehaviour
             if (player != null)
             {
                 player.TakeDamage(damagePerTick); // deal damage to the player
-                //Debug.Log($"Player took {damagePerTick} damage from toxic gas");
             }
 
             // wait for the damage interval before dealing damage again
@@ -112,6 +111,7 @@ public class ToxicGasEvent : MonoBehaviour
         Debug.Log("Toxic gas event has ended");
         isGassing = false;
         gasNotificationText.gameObject.SetActive(false); // hide the gas notification text
+
         if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(FadeScreen(false)); // fade the screen back to normal
     }
@@ -126,6 +126,40 @@ public class ToxicGasEvent : MonoBehaviour
             overlayColor.a = Mathf.MoveTowards(overlayColor.a, targetAlpha, fadeSpeed * Time.deltaTime);
             gasScreenOverlay.color = overlayColor;
             yield return null;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInGasZone = true;
+            TryStartGas();
+
+            if (areaWarningText != null)
+            {
+                areaWarningText.gameObject.SetActive(true);
+                areaWarningText.text = "Warning: Toxic gas detected in the area";
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInGasZone = false;
+
+            if (gasCoroutine != null)
+            {
+                StopCoroutine(gasCoroutine);
+                EndGas();  // end the gas event immediately when player leaves
+            }
+
+            if (areaWarningText != null)
+            {
+                areaWarningText.gameObject.SetActive(false);
+            }
         }
     }
 }
